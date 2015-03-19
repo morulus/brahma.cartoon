@@ -1,0 +1,25 @@
+{
+  "name": "brahma.cartoon.dev",
+  "version": "1.0.0",
+  "description": "Build brahma.cartoon widget for BrahmaJs",
+  "main": "gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "brahma.screens",
+    "dev"
+  ],
+  "author": "morulus <vladimirmorulus@gmail.com> (http://github.com/morulus/)",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-uglify": "latest",
+    "grunt-snipper": "latest",
+    "grunt-banner": "latest",
+    "grunt-increase": ">=0.0.3",
+    "prompt": "~0.2.14",
+    "colors": "~1.0.3"
+  }
+}

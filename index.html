@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Parallax HD slider — Screens for BrahmaJs</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Parallax HD Slider">
+		<meta name="keywords" content="JavaScript,Widget,Brahma,Cartoon,Animator,PNG">
+		<meta name="author" content="Vladimir Kalmykov">
+		<link rel="image_src" href="dev/thumb.jpg">
+
+		<script src="demo/scripts/hightlight.js" type="text/javascript"></script>
+		
+		<link href="demo/styles/highlight-theme.css" rel="stylesheet">
+		<link href="demo/styles/custom.css" rel="stylesheet">
+		<script src="req/brahma.min.js" type="text/javascript"></script>
+		<script src="dist/brahma.cartoon.min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			hljs.initHighlightingOnLoad();
+		</script>
+		<style>
+		figure {
+			margin:0;
+		}
+		</style>
+		<script>
+
+			window.requestAnimFrame = (function(){
+		      return  window.requestAnimationFrame       || 
+		              window.webkitRequestAnimationFrame || 
+		              window.mozRequestAnimationFrame    || 
+		              window.oRequestAnimationFrame      || 
+		              window.msRequestAnimationFrame     || 
+		              function(/* function */ callback, /* DOMElement */ element){
+		                window.setTimeout(callback, 1000 / 60);
+		              };
+		    })();
+		</script>
+</head>
+<body class="mrls metro">
+
+	<div class="theme-morulus">
+		
+
+<section class="background-substrate-fox">
+	<div class="container">
+		<div class="row col-pad-medium">
+			<div class="col-md-6" id="motionscreen">
+				
+					
+						<figure data-cartoon="cols:4;rows:5;height:70px;scenario:..;" data-cartoon-src="demo/frames/fox.png" ></figure>
+					
+					<h1><i>Brahma</i>Cartoon</h1>
+				
+				<div class="style-present">
+					<h2>PNG animator</h2>
+				</div>
+			</div>
+			<script>
+			;(function(ms) {
+				var blink;
+				blink = function() {
+					ms.style.opacity = 1-(0.2*Math.random());
+					setTimeout(function() {
+						window.requestAnimFrame(blink);
+					},50);
+				};
+				blink();
+				
+			})(Brahma("#motionscreen")[0]);
+			</script>
+			<div class="col-md-6 style-present">
+				<div class="pull-right in-design" style="position:relative;">
+					<figure data-cartoon="cols:3;rows:1;" data-cartoon-src="demo/frames/light.png" class="projector-light"></figure>
+					<figure data-cartoon="cols:1;rows:12;scenario:..;" data-cartoon-src="demo/frames/projector.png" ></figure>
+					<img src="demo/projector-bottoms.png" alt="" style="position:absolute;top:185px;">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<article class="main-example">
+				<div class="col-md-12">
+					<center>
+						
+						<div>
+							
+						</div>
+					</center>
+				</div>
+			</article>
+		</div>
+	</div>
+</section>
+<section class="schoolboard">
+	<div class="container">
+		<pre><code class="html dark no-padding transparent">&lt;figure data-cartoon=&quot;cols:3;rows:12;controls:true;&quot; data-cartoon-src=&quot;fox.png&quot; &gt;&lt;/figure&gt;</code></pre>
+		<pre><code class="html dark no-padding transparent">&lt;script&gt;
+	Brahma("figure").widget('cartoon');
+&lt;/ script&gt;</code></pre>
+	</div>
+</section>
+
+<section class="">
+	<div class="container">
+		<h2>Getting started</h2>
+		<div class="panel">
+			<div class="row">
+				<div class="col-xs-7">
+					<strong></strong>
+					<p>This plugin requires <code>BrahmaJs 1.3.10</code>.</p>
+					<p>Get BrahmaJs on GitHub: <a href="https://github.com/morulus/brahma">https://github.com/morulus/brahma</a><br />
+					Brahma.screens on GitHub: <a href="https://github.com/morulus/brahma.cartoon">https://github.com/morulus/brahma.cartoon</a></p>
+				</div>
+				<div class="col-xs-5 ">
+					<div class="free-pull-center">
+						<strong>Download via Bower:</strong>
+						<pre><code class="dark">bower install brahma.cartoon</code></pre>
+					</div>
+				</div>
+			</div>
+		</div>
+		<p>We assume that all the required libraries you already have.
+Connect to the page all required js.</p>
+
+<pre><code class="html">&lt;script src="bower_components/brahma/dist/brahma.min.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="bower_components/brahma.cartoon/dist/brahma.cartoon.min.js" type="text/javascript"&gt;&lt;/script&gt;
+</code></pre>
+	</div>
+</section>
+<section>
+	<div class="container">
+		<h2>How it works</h2>
+		<div class="row">
+			<div class="col-md-12">
+				<p>I'll explain how it works on the example of animation cat that I found on the Internet.</p>
+				<center><img src="demo/frames/cat-scheme.png" alt="" class="col-md-7" /></center>
+			</div>
+			
+			<div class="col-md-12">
+				<p>First of all, we need to specify which image to use. This is done through the <code>src</code> option.</p>
+				<pre><code class="javascript">{
+	"src": "cat.png"
+}</code></pre>
+				<p>The original image of a traveling cat consists of three columns and 4 rows. The correct sequence for the animation moves downward, every fourth frame returning upward and shifted right. To explain to the program where to move, you should specify only the direction of movement by option <code>direction: down</code>. But considering that this value is the default, <strong><code>direction: "down"</code> option can be skipt</strong>. It remains to explain that after 4 frame it need to go to the right. To do this, you need to specify that sprite has 4 rows and 3 columns.</p>
+				<pre><code class="javascript">{
+	"src": "cat.png",
+	"direction": "down", // Default
+	"rows": 4,
+	"cols": 3
+}</code></pre>
+				<p>Since the program already knows the number of rows and columns, it can already understand the size of the result, so we do not need to specify the size of the widget.</p>
+				<p>Time to create HTML code. As the container you can choose any tag. I prefer &lt;figure /&gt;, but it can be any block element.</p>
+				<pre><code>&lt;figure id=&quot;cat-animation&quot;&gt;&lt;/figure&gt;</code></pre>
+				<p>It remains to call widget with custom configuration. This is done via Brahma.</p>
+				<pre><code>Brahma("#cat-animation").widget("cartoon", {
+	"src": "cat.png",
+	"rows": 4,
+	"cols": 3
+});</code></pre>
+				<p>Finishing touch. This design is too heavy. I would like to make it less time-consuming and more versatile. First, we will remove the id, because we will handle all of the figure. Second - we move the options in a tag to attribute <code>data-cartoon="cols:3;rows:4;"</code> and attribute <code>data-cartoon-src="car.png"</code>. Now the javascript code can become more compact and versatile.</p>
+				<pre><code class="javascript">Brahma(&quot;figure&quot;).widget(&quot;cartoon&quot;);</code></pre>
+				<p>The final version will be as follows:</p>
+				
+			</div>
+			<div class="col-md-7"><pre><code class="html dark">
+&lt;figure data-cartoon=&quot;cols:3;rows:4;&quot; data-cartoon-src=&quot;cat.png&quot;&gt;&lt;/figure&gt;
+
+&lt;script&gt;
+	Brahma(&quot;figure&quot;).widget(&quot;cartoon&quot;);
+&lt;/script&gt;
+
+</code></pre></div>
+			<div class="col-md-5" style="">
+				<figure data-cartoon-src="demo/frames/cat.png" data-cartoon="cols:3;rows:4;" class="pull-right"></figure>
+			</div>
+
+		</div>
+	</div>
+</section>
+<section>
+	<div class="container">
+		<h2>Frames per second</h2>
+		<div class="row">
+			<div class="col-md-12">
+				<p>Using FTP option you can control the speed of brute frames per second. The default value for this option is 12. This means that it will be replaced 12 times for a one second. Change of this value at a value of less than 12 becomes more noticeable. Values above give a smoother result. 30 does motion perfect. Do not forget that with the increase in frames per second increases the speed of the animation, so you will need to have more frames.</p>
+			</div>
+			<div class="col-md-6">
+				<pre><code>widget("cartoon", {
+	"fps": 6
+});</code></pre>
+				<center><figure data-cartoon-src="demo/frames/cat.png" data-cartoon="fps:6;cols:3;rows:4;"></figure></center>
+			</div>
+			<div class="col-md-6">
+				<pre><code>widget("cartoon", {
+	"fps": 30
+});</code></pre>
+				<center><figure data-cartoon-src="demo/frames/cat.png" data-cartoon="fps:30;cols:3;rows:4;"></figure></center>
+			</div>
+		</div>
+	</div>
+</section>
+<section>
+	<div class="container">
+		<h2>Resizing</h2>
+		<div class="row">
+			<div class="col-md-12">
+				<p>The size of the final result can be changed via the option <code>width</code> and <code>height</code>. This size can be specified only in the pixel. You can specify only the width or height. The remaining value will be calculated automatically, based on the aspect ratio of the source frame.</p>
+			</div>
+			<div class="col-md-4">
+				<pre><code>widget("cartoon", {
+	"height": 130
+});</code></pre>
+				<center><figure data-cartoon-src="demo/frames/cat.png" data-cartoon="height:130px;cols:3;rows:4;"></figure></center>
+			</div>
+			<div class="col-md-4">
+				<pre><code>widget("cartoon", {
+	"width": 180
+});</code></pre>
+				<center><figure data-cartoon-src="demo/frames/cat.png" data-cartoon="width:180px;cols:3;rows:4;"></figure></center>
+			</div>
+			<div class="col-md-4">
+				<pre><code>widget("cartoon", {
+	"width": 100
+});</code></pre>
+				<center><figure data-cartoon-src="demo/frames/cat.png" data-cartoon="width:100px;cols:3;rows:4;"></figure></center>
+			</div>
+		</div>
+	</div>
+</section>
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Scenario</h2>
+				<p>You can control the playback order up to the frame via a scenario. Scenario is a precise indication of the sequence of frames in the array of indexes. Foe example, you want to use only 1,2,3,4 and 5-th frame in animation. To do that, you should write options:
+				<pre><code class="javascript black">widget("cartoon",{
+	scenario: [0,1,2,3,4]
+})</code></pre>
+				Dont forget that first index has value is 0, so final index will be 4, not 5.</p>
+				<p>If you dont want specify all of the frames from the beginning to the end. There is a way to make the writing less and specify only the first and last frame. To do this, use the special symbold <code>..</code>.</p>
+				<pre><code class="javascript black">widget("cartoon",{
+	scenario: [0,"..",4]
+});</code></pre>
+				<p>When used it in attribute value, record becomes even easier:</p>
+				<pre><code class="javascript black">data-cartoon=&quot;scenario:0..4;&quot;</code></pre>
+			</div>
+			<div class="col-md-6">
+				
+				<p>Is possible to specify any order of the indices in any quantity.</p>
+				<pre><code class="javascript black">data-cartoon=&quot;scenario:0..10..0; - forth and back</code></pre>
+				<pre><code class="javascript black">data-cartoon=&quot;scenario:5..;&quot; - play from 5 to last frame</code></pre>
+				<pre><code class="javascript black">data-cartoon=&quot;scenario:..5;&quot; - play from last frame to 5</code></pre>
+				<pre><code class="javascript black">data-cartoon=&quot;scenario:..;&quot; - play all (default)</code></pre>
+			</div>
+			<div class="col-md-6">
+				<br /><br />
+				<figure data-cartoon-src="demo/frames/cat.png" data-cartoon="cols:3;rows:4;scenario:0..10..0;"></figure>
+			</div>
+		</div>
+				
+	</div>
+</section>
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Manual control</h2>
+				<p>You can disable auto play and to control the animation independently. To do this, set the option <code>autoplay</code> to <code>false</code> and use instead of the method <code>widget</code> method <code>app</code>.</p>
+				<pre><code>var catAnimator = Brahma("#cat-animation").app("cartoon",{autoplay:false});</code></pre>
+				<p>The difference between these two calls is that the method "app" works only for a single element and returns a reference to the widget itself (when in turn the method <code>widget</code> works for all selector elements and returns back a reference to the selector, like in jQuery).</p>
+				<p>Now, having access to the object of the widget, you can manually switch between frames or specify the degree of progress, using method <code>goto(index)</code> and <code>progress(degree)</code>.</p>
+				
+			</div>
+			<div class="col-md-5" id="webKitEqExample">
+				<p>That's eq example, that uses manual controls:</p>
+				<div id="eq" data-cartoon-src="demo/frames/jake.jpg" data-cartoon="cols:1;rows:15;scenario:..;autoplay:false;"></div>
+				<audio controls loop id="audio" src="http://morulus.ru/cloud-dirty/skrillex.mp3" controls style="width:389px;"></audio>
+				<div class="attention">Attention! Lower the volume of your speakers, that would not become deaf.</div>
+				<div id="eq-vis2"></div>
+				<div id="eq-vis"><div style="height:10px;background:red;width:0%;"></div></div>
+				
+			</div>
+			<div class="col-md-5">
+			<pre><code class="javascript">
+var eq = Brahma("#eq").app("cartoon");
+// Get progress 0-1 from EQ script
+eq.progress(progress);
+			</code></pre>
+			</div>
+			<script>
+				(function() {
+					var analyser;
+					var eq = Brahma("#eq").app("cartoon");
+					var eqvis = Brahma("#eq-vis>div")[0];
+					var eqvis2 = Brahma("#eq-vis2")[0];
+					var leazy=0;
+					window.AudioContext = window.AudioContext || window.webkitAudioContext;
+					// Draw the audio frequencies to screen
+					function draw() {
+						// Setup the next frame of the drawing
+					 	requestAnimFrame(draw);
+					  	// Create a new array that we can copy the frequency data into
+
+						var freqByteData = new Uint8Array(analyser.frequencyBinCount);
+						// Copy the frequency data into our new array
+						analyser.getByteFrequencyData(freqByteData);
+						
+						// Clear the drawing display
+					
+						// For each "bucket" in the frequency data, draw a line corresponding to its magnitude
+						var max = 0;
+
+						for (var i = 0; i < freqByteData.length; i++) {
+							
+							if (freqByteData[i]*-1>max) max = freqByteData[i]*-1;
+						};
+						
+						var verbe = freqByteData[10];
+						if (leazy<verbe) leazy+=(verbe-leazy)*0.05;
+						if (leazy>verbe) leazy-=(leazy-verbe)*0.05;
+
+						var pregress = (leazy-190)/40;
+						eqvis.style.width = Math.round(pregress*100)+'%';
+						eq.progress(pregress);
+					}
+					var equalize = function(audio) {
+						var audioContext = new AudioContext();
+						analyser = audioContext.createAnalyser();
+						var source = audioContext.createMediaElementSource(audio);
+						source.connect(analyser);
+						analyser.connect(audioContext.destination);
+						draw();
+					};
+					var audio = document.getElementById('audio');
+					equalize(audio); // как-то так, 
+				})();
+			</script>
+			<div class="col-md-12">
+				<p>Also there is the possibility to activate the timeline. This is done using the option <code>controls</code>. In addition to the timeline, it enables toggle play when you click on widget. This is useful for debugging animation.</p>
+				<pre><code>widget("cartoon", {
+	"controls": true
+});</code></pre>
+				<center><figure data-cartoon-src="demo/frames/cat.png" data-cartoon="cols:3;rows:4;controls:true;"></figure></center>
+				<p>You can create your own timeline using event <code>change</code> and method <code>progress</code>. Don't forget to use <code>app()</code> method instead <code>widget()</code> to get a reference to the widget.</p>
+			</div>
+			<div class="col-md-6">
+				<p></p>
+				<pre><code class="code javascript">widget.bind('change', function(index, progress) {
+});</code></pre>
+			</div>
+			<div class="col-md-6">
+				<p></p>
+				<pre><code class="code javascript">widget.progress(0.35); // Set progress
+widget.goto(4); // Go to frame</code></pre>
+			</div>
+		</div>
+	</div>
+</section>
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Events</h2>
+				<p>There is few events you can use:</p>
+				<p><strong>change</strong> - triggered by a change of frame. Has two arguments: a serial number and progress.</p>
+				
+				<p><strong>ready</strong> - triggered by a load the image. Has one argument: ref to image.</p>
+
+				<p><strong>end</strong> - Event fires when scenario ends.</p>
+				
+			</div>
+			<div class="col-md-12">
+				<pre><code class="code javascript">// Fires when frame changes
+widget.bind('change', function(index, progress) {
+	console.log('Frame changes to ',index,'Motion progress is ',progress);
+});
+// Fires when image is ready
+widget.bind('ready', function(image) {
+	console.log('Widget ready!','Image width:',image.width,'Image height:',image.height);
+});
+</code></pre>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<h2>Author</h2>
+				<p>Vladimir Kalmykov <a href="https://github.com/morulus/">@morulus</a></p>
+			</div>
+			<div class="col-md-3">
+				<h2>License</h2>
+				<p>MIT, Copyright (c) 2015</p>
+			</div>
+			<div class="col-md-3">
+				<h2>Donate</h2>
+				<p><iframe frameborder="0" allowtransparency="true" scrolling="no" src="https://money.yandex.ru/embed/small.xml?account=410011736685546&quickpay=small&yamoney-payment-type=on&button-text=06&button-size=s&button-color=orange&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%B8%D1%82%D0%B5+%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82&default-sum=100&successURL=http%3A%2F%2Fmorulus.github.io%2Fbrahma.cartoon%2F" width="147" height="31"></iframe></p>
+			</div>
+			<div class="col-md-3">
+				<center>
+					<figure class="anima" data-cartoon="cols:6;rows:5;height:120px;scenario:..;" data-cartoon-src="demo/frames/Smoke30Frames_0.png" ></figure>
+				</center>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="yellowboard">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>See also:</h2>
+			</div>
+			<script>(function(id) {
+				document.writeln("<div id=\""+id+"\"></div>");var d,s;
+				(d=document,s=d.createElement('SCRIPT'),s.setAttribute('aynch',true),s.setAttribute("type", "text/javascript"),function() {
+					return d.documentElement || d.getElementsByTagName("HEAD")[0]
+				}().appendChild(s))&&(s.onload=s.onreadystatechange=function(){if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete") morulusInjectionPatch(id);s.onload=s.onreadystatechange=null;},s.src='http://morulus.ru/commercialInjects/get.js');
+			})("morulusInjection");
+			</script>
+		</div>
+	</div>
+</section>
+
+<div class="ribbon">
+		<a href="https://github.com/morulus/brahma.cartoon" target="_blank">Star me on GitHub</a>
+	</div>
+</body>
+
+	
+<script>
+;(function() {
+	var loadings,loaded;
+	var loaded = function() {
+		loadings--;
+		if (loadings===0) {
+			Brahma('.in-design').removeClass('in-design');
+		}
+	};
+	Brahma("figure").tie(function() {
+		loadings=this.length;
+	}).widget('cartoon', {
+		onReady: function() {
+			loaded();
+		}
+	})
+})();
+
+
+
+
+</script>
+</html>

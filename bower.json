@@ -1,0 +1,30 @@
+{
+	"name": "brahma.cartoon",
+	"version": "1.0.0",
+	"authors": [
+		{
+			"name": "Morulus",
+			"email": "vladimirmorulus@gmail.com"
+		}
+	],
+	"description": "Application for making animated cartoon",
+	"main": "dist/brahma.cartoon.js",
+	"moduleType": [
+		"globals"
+	],
+	"keywords": [
+		"brahmajs",
+		"cartoon",
+		"plugin"
+	],
+	"license": "MIT",
+	"homepage": "http://github.com/morulus/brahma.cartoon/",
+	"ignore": [
+		"demo/"
+	],
+  "license": "MIT",
+  "homepage": "https://github.com/morulus/brahma.cartoon",
+  "dependencies": {
+    "brahma": ">=1.3.10"
+  }
+}
