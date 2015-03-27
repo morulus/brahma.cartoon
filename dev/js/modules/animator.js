@@ -12,7 +12,6 @@
 		},
 		mover: null,
 		play: function() {
-
 			if (this.interval>0) {
 				this.data.dummy = false; return true;
 			};

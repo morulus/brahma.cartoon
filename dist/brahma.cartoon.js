@@ -1,5 +1,9 @@
 ;(function(Brahma) {
+	
 	Brahma.app('cartoon', {
+		$config: {
+			forEachElement: true
+		},
 		config: {
 			scenario: false, // Сценарий, очередность кадров
 			direction: 'down', // Направление движения по спрайту
@@ -71,6 +75,7 @@
 
 			/* Предзагрузка */
 			this.preloadSprite(function() {
+
 				this.trigger('ready',[this.testImage]);
 				if ("function"===typeof this.config.onReady) this.config.onReady.call(this,this.testImage);
 				/*
@@ -349,7 +354,6 @@
 		},
 		mover: null,
 		play: function() {
-
 			if (this.interval>0) {
 				this.data.dummy = false; return true;
 			};

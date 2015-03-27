@@ -72,6 +72,13 @@ module.exports = function(grunt) {
 				json:  '../bower.json',
 				report: {'../UPDATES.md':'## Versions'}
 			}
+		},
+		concat: {
+		    /* Update dependecies */
+		    updatereq: {
+		    	src: ['../../brahmajs/dist/brahma.min.js'],
+		    	dest: '../req/brahma.min.js'
+		    }
 		}
 	});
 
@@ -83,10 +90,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-increase');
 	//grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-banner');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 
 	grunt.registerTask('default', ['snipper:js','usebanner:dist',/*,'less:styles',*/'uglify:minone','watch']);
 	grunt.registerTask('up-tick', ['increase:tick']);
 	grunt.registerTask('up-model', ['increase:model']);
 	grunt.registerTask('up-version', ['increase:version']);
-	grunt.registerTask('build', ['snipper:js', /*'less:styles',*/ 'usebanner:dist', /*'cssmin:dist',*/ 'uglify:minone', 'concat', /*'cssmin:jquery',*/ /*'uglify:minbuild',*/]);
+	grunt.registerTask('update', ['concat:updatereq']);
+	grunt.registerTask('build', ['concat', 'snipper:js', /*'less:styles',*/ 'usebanner:dist', /*'cssmin:dist',*/ 'uglify:minone', /*'cssmin:jquery',*/ /*'uglify:minbuild',*/]);
 };

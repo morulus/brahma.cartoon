@@ -95,7 +95,7 @@
 	<div class="container">
 		<pre><code class="html dark no-padding transparent">&lt;figure data-cartoon=&quot;cols:3;rows:12;controls:true;&quot; data-cartoon-src=&quot;fox.png&quot; &gt;&lt;/figure&gt;</code></pre>
 		<pre><code class="html dark no-padding transparent">&lt;script&gt;
-	Brahma("figure").widget('cartoon');
+	Brahma("figure").use('cartoon');
 &lt;/ script&gt;</code></pre>
 	</div>
 </section>
@@ -148,17 +148,17 @@ Connect to the page all required js.</p>
 	"rows": 4,
 	"cols": 3
 }</code></pre>
-				<p>Since the program already knows the number of rows and columns, it can already understand the size of the result, so we do not need to specify the size of the widget.</p>
+				<p>Since the program already knows the number of rows and columns, it can already understand the size of the result, so we do not need to specify the size of the use.</p>
 				<p>Time to create HTML code. As the container you can choose any tag. I prefer &lt;figure /&gt;, but it can be any block element.</p>
 				<pre><code>&lt;figure id=&quot;cat-animation&quot;&gt;&lt;/figure&gt;</code></pre>
-				<p>It remains to call widget with custom configuration. This is done via Brahma.</p>
-				<pre><code>Brahma("#cat-animation").widget("cartoon", {
+				<p>It remains to call application with custom configuration. This is done via Brahma.</p>
+				<pre><code>Brahma("#cat-animation").use("cartoon", {
 	"src": "cat.png",
 	"rows": 4,
 	"cols": 3
 });</code></pre>
 				<p>Finishing touch. This design is too heavy. I would like to make it less time-consuming and more versatile. First, we will remove the id, because we will handle all of the figure. Second - we move the options in a tag to attribute <code>data-cartoon="cols:3;rows:4;"</code> and attribute <code>data-cartoon-src="car.png"</code>. Now the javascript code can become more compact and versatile.</p>
-				<pre><code class="javascript">Brahma(&quot;figure&quot;).widget(&quot;cartoon&quot;);</code></pre>
+				<pre><code class="javascript">Brahma(&quot;figure&quot;).use(&quot;cartoon&quot;);</code></pre>
 				<p>The final version will be as follows:</p>
 				
 			</div>
@@ -166,7 +166,7 @@ Connect to the page all required js.</p>
 &lt;figure data-cartoon=&quot;cols:3;rows:4;&quot; data-cartoon-src=&quot;cat.png&quot;&gt;&lt;/figure&gt;
 
 &lt;script&gt;
-	Brahma(&quot;figure&quot;).widget(&quot;cartoon&quot;);
+	Brahma(&quot;figure&quot;).use(&quot;cartoon&quot;);
 &lt;/script&gt;
 
 </code></pre></div>
@@ -185,13 +185,13 @@ Connect to the page all required js.</p>
 				<p>Using FTP option you can control the speed of brute frames per second. The default value for this option is 12. This means that it will be replaced 12 times for a one second. Change of this value at a value of less than 12 becomes more noticeable. Values above give a smoother result. 30 does motion perfect. Do not forget that with the increase in frames per second increases the speed of the animation, so you will need to have more frames.</p>
 			</div>
 			<div class="col-md-6">
-				<pre><code>widget("cartoon", {
+				<pre><code>use("cartoon", {
 	"fps": 6
 });</code></pre>
 				<center><figure data-cartoon-src="demo/frames/cat.png" data-cartoon="fps:6;cols:3;rows:4;"></figure></center>
 			</div>
 			<div class="col-md-6">
-				<pre><code>widget("cartoon", {
+				<pre><code>use("cartoon", {
 	"fps": 30
 });</code></pre>
 				<center><figure data-cartoon-src="demo/frames/cat.png" data-cartoon="fps:30;cols:3;rows:4;"></figure></center>
@@ -207,19 +207,19 @@ Connect to the page all required js.</p>
 				<p>The size of the final result can be changed via the option <code>width</code> and <code>height</code>. This size can be specified only in the pixel. You can specify only the width or height. The remaining value will be calculated automatically, based on the aspect ratio of the source frame.</p>
 			</div>
 			<div class="col-md-4">
-				<pre><code>widget("cartoon", {
+				<pre><code>use("cartoon", {
 	"height": 130
 });</code></pre>
 				<center><figure data-cartoon-src="demo/frames/cat.png" data-cartoon="height:130px;cols:3;rows:4;"></figure></center>
 			</div>
 			<div class="col-md-4">
-				<pre><code>widget("cartoon", {
+				<pre><code>use("cartoon", {
 	"width": 180
 });</code></pre>
 				<center><figure data-cartoon-src="demo/frames/cat.png" data-cartoon="width:180px;cols:3;rows:4;"></figure></center>
 			</div>
 			<div class="col-md-4">
-				<pre><code>widget("cartoon", {
+				<pre><code>use("cartoon", {
 	"width": 100
 });</code></pre>
 				<center><figure data-cartoon-src="demo/frames/cat.png" data-cartoon="width:100px;cols:3;rows:4;"></figure></center>
@@ -233,12 +233,12 @@ Connect to the page all required js.</p>
 			<div class="col-md-12">
 				<h2>Scenario</h2>
 				<p>You can control the playback order up to the frame via a scenario. Scenario is a precise indication of the sequence of frames in the array of indexes. Foe example, you want to use only 1,2,3,4 and 5-th frame in animation. To do that, you should write options:
-				<pre><code class="javascript black">widget("cartoon",{
+				<pre><code class="javascript black">use("cartoon",{
 	scenario: [0,1,2,3,4]
 })</code></pre>
 				Dont forget that first index has value is 0, so final index will be 4, not 5.</p>
 				<p>If you dont want specify all of the frames from the beginning to the end. There is a way to make the writing less and specify only the first and last frame. To do this, use the special symbold <code>..</code>.</p>
-				<pre><code class="javascript black">widget("cartoon",{
+				<pre><code class="javascript black">use("cartoon",{
 	scenario: [0,"..",4]
 });</code></pre>
 				<p>When used it in attribute value, record becomes even easier:</p>
@@ -265,93 +265,38 @@ Connect to the page all required js.</p>
 		<div class="row">
 			<div class="col-md-12">
 				<h2>Manual control</h2>
-				<p>You can disable auto play and to control the animation independently. To do this, set the option <code>autoplay</code> to <code>false</code> and use instead of the method <code>widget</code> method <code>app</code>.</p>
-				<pre><code>var catAnimator = Brahma("#cat-animation").app("cartoon",{autoplay:false});</code></pre>
-				<p>The difference between these two calls is that the method "app" works only for a single element and returns a reference to the widget itself (when in turn the method <code>widget</code> works for all selector elements and returns back a reference to the selector, like in jQuery).</p>
-				<p>Now, having access to the object of the widget, you can manually switch between frames or specify the degree of progress, using method <code>goto(index)</code> and <code>progress(degree)</code>.</p>
-				
+				<p>You can disable auto play and to control the animation independently. To do this, set the option <code>autoplay</code> to <code>false</code> and use instead of the method <code>use</code> method <code>app</code>.</p>
+				<pre><code class="javascript">var catAnimator = Brahma("#cat-animation").app("cartoon",{autoplay:false});</code></pre>
+				<p>The difference between these two calls is that the method <code>app()</code> works only for a first element and returns a reference to the created application (when in turn the method <code>use</code> works for all selector elements and returns back selector object, like in jQuery).</p>
+				<p>Now, having access to the object of the application, you can manually switch between frames or specify the degree of progress, using method <code>goto(index)</code> and <code>progress(degree)</code>.</p>
+				<pre><code class="javascript">var cat = Brahma("#cat-animation").app("cartoon",{autoplay:false});
+cat.progress(0.5); // Go to to progress*0.5
+cat.goto(12); // Go to frame #12</code></pre>
 			</div>
-			<div class="col-md-5" id="webKitEqExample">
-				<p>That's eq example, that uses manual controls:</p>
-				<div id="eq" data-cartoon-src="demo/frames/jake.jpg" data-cartoon="cols:1;rows:15;scenario:..;autoplay:false;"></div>
-				<audio controls loop id="audio" src="http://morulus.ru/cloud-dirty/skrillex.mp3" controls style="width:389px;"></audio>
-				<div class="attention">Attention! Lower the volume of your speakers, that would not become deaf.</div>
-				<div id="eq-vis2"></div>
-				<div id="eq-vis"><div style="height:10px;background:red;width:0%;"></div></div>
-				
-			</div>
-			<div class="col-md-5">
-			<pre><code class="javascript">
-var eq = Brahma("#eq").app("cartoon");
-// Get progress 0-1 from EQ script
-eq.progress(progress);
-			</code></pre>
-			</div>
-			<script>
-				(function() {
-					var analyser;
-					var eq = Brahma("#eq").app("cartoon");
-					var eqvis = Brahma("#eq-vis>div")[0];
-					var eqvis2 = Brahma("#eq-vis2")[0];
-					var leazy=0;
-					window.AudioContext = window.AudioContext || window.webkitAudioContext;
-					// Draw the audio frequencies to screen
-					function draw() {
-						// Setup the next frame of the drawing
-					 	requestAnimFrame(draw);
-					  	// Create a new array that we can copy the frequency data into
-
-						var freqByteData = new Uint8Array(analyser.frequencyBinCount);
-						// Copy the frequency data into our new array
-						analyser.getByteFrequencyData(freqByteData);
-						
-						// Clear the drawing display
-					
-						// For each "bucket" in the frequency data, draw a line corresponding to its magnitude
-						var max = 0;
-
-						for (var i = 0; i < freqByteData.length; i++) {
-							
-							if (freqByteData[i]*-1>max) max = freqByteData[i]*-1;
-						};
-						
-						var verbe = freqByteData[10];
-						if (leazy<verbe) leazy+=(verbe-leazy)*0.05;
-						if (leazy>verbe) leazy-=(leazy-verbe)*0.05;
-
-						var pregress = (leazy-190)/40;
-						eqvis.style.width = Math.round(pregress*100)+'%';
-						eq.progress(pregress);
-					}
-					var equalize = function(audio) {
-						var audioContext = new AudioContext();
-						analyser = audioContext.createAnalyser();
-						var source = audioContext.createMediaElementSource(audio);
-						source.connect(analyser);
-						analyser.connect(audioContext.destination);
-						draw();
-					};
-					var audio = document.getElementById('audio');
-					equalize(audio); // как-то так, 
-				})();
-			</script>
+		</div>
+	</div>
+</section>
+<section>
+	<div class="container">
+		<div class="row">
 			<div class="col-md-12">
-				<p>Also there is the possibility to activate the timeline. This is done using the option <code>controls</code>. In addition to the timeline, it enables toggle play when you click on widget. This is useful for debugging animation.</p>
-				<pre><code>widget("cartoon", {
+				<h2>Timeline</h2>
+				<p>Also there is the possibility to activate the timeline. This is done using the option <code>controls</code>. In addition to the timeline, it enables toggle play when you click on use. This is useful for debugging animation.</p>
+				<pre><code>use("cartoon", {
 	"controls": true
 });</code></pre>
 				<center><figure data-cartoon-src="demo/frames/cat.png" data-cartoon="cols:3;rows:4;controls:true;"></figure></center>
-				<p>You can create your own timeline using event <code>change</code> and method <code>progress</code>. Don't forget to use <code>app()</code> method instead <code>widget()</code> to get a reference to the widget.</p>
+				<p>You can create your own timeline using event <code>change</code> and method <code>progress</code>. Don't forget to use <code>app()</code> method instead <code>use()</code> to get a reference to the use.</p>
 			</div>
 			<div class="col-md-6">
 				<p></p>
-				<pre><code class="code javascript">widget.bind('change', function(index, progress) {
+				<pre><code class="code javascript">use.bind('change', function(index, progress) {
 });</code></pre>
 			</div>
 			<div class="col-md-6">
 				<p></p>
-				<pre><code class="code javascript">widget.progress(0.35); // Set progress
-widget.goto(4); // Go to frame</code></pre>
+				<pre><code class="code javascript">use.progress(0.35); // Set progress
+use.goto(4); // Go to frame</code></pre>
 			</div>
 		</div>
 	</div>
@@ -363,22 +308,27 @@ widget.goto(4); // Go to frame</code></pre>
 				<h2>Events</h2>
 				<p>There is few events you can use:</p>
 				<p><strong>change</strong> - triggered by a change of frame. Has two arguments: a serial number and progress.</p>
-				
-				<p><strong>ready</strong> - triggered by a load the image. Has one argument: ref to image.</p>
-
-				<p><strong>end</strong> - Event fires when scenario ends.</p>
-				
-			</div>
-			<div class="col-md-12">
 				<pre><code class="code javascript">// Fires when frame changes
-widget.bind('change', function(index, progress) {
+use.bind('change', function(index, progress) {
 	console.log('Frame changes to ',index,'Motion progress is ',progress);
-});
-// Fires when image is ready
-widget.bind('ready', function(image) {
+});</code></pre>
+				<p><strong>ready</strong> - triggered by a load the image. Has one argument: ref to image.</p>
+<pre><code class="code javascript">// Fires when image is ready
+use.bind('ready', function(image) {
 	console.log('Widget ready!','Image width:',image.width,'Image height:',image.height);
 });
 </code></pre>
+				<p><strong>end</strong> - Event fires when scenario ends.</p>
+<pre><code class="code javascript">// Fires when the scenario ends
+use.bind('end', function() {
+	alert('The end. To be continued.');
+});
+</code></pre>
+				
+			</div>
+			<div class="col-md-12">
+				
+
 			</div>
 		</div>
 	</div>
@@ -440,9 +390,10 @@ widget.bind('ready', function(image) {
 			Brahma('.in-design').removeClass('in-design');
 		}
 	};
+
 	Brahma("figure").tie(function() {
 		loadings=this.length;
-	}).widget('cartoon', {
+	}).use('cartoon', {
 		onReady: function() {
 			loaded();
 		}

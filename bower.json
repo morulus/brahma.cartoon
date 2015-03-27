@@ -1,6 +1,6 @@
 {
 	"name": "brahma.cartoon",
-	"version": "1.0.0",
+	"version": "0.2.0",
 	"authors": [
 		{
 			"name": "Morulus",
@@ -18,13 +18,11 @@
 		"plugin"
 	],
 	"license": "MIT",
-	"homepage": "http://github.com/morulus/brahma.cartoon/",
+	"homepage": "https://github.com/morulus/brahma.cartoon",
 	"ignore": [
 		"demo/"
 	],
-  "license": "MIT",
-  "homepage": "https://github.com/morulus/brahma.cartoon",
-  "dependencies": {
-    "brahma": ">=1.3.10"
-  }
+	"dependencies": {
+		"brahma": ">=1.3.12"
+	}
 }
