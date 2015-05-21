@@ -10,7 +10,7 @@ Brahma.app('cartoon').module('visual-controller', function() {
 		Brahma(that.master.data.HTMLElements.visualController).css("width",Math.round(progress*100)+'%');
 	});
 },{
-	bindEvents : function() {
+	bindEvents : function() { 
 		var that = this, downed = false, ctrlWidth;
 		// Pause on click
 		Brahma(this.master.selector).bind('click', function() {

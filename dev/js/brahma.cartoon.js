@@ -234,7 +234,7 @@
 			return true;
 		},
 		/* Воспроизводит анимацию, если сейчас она не воспроизводится */
-		wake: function() {
+		wake: function() { 
 			if (!this.isAnimated()) {
 				this.module('animator').data.dummy=false;
 				if (this.animation.index>=this.animation.scenario.length-1) this.rewind();

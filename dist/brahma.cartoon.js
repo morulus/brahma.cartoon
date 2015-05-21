@@ -234,7 +234,7 @@
 			return true;
 		},
 		/* Воспроизводит анимацию, если сейчас она не воспроизводится */
-		wake: function() {
+		wake: function() { 
 			if (!this.isAnimated()) {
 				this.module('animator').data.dummy=false;
 				if (this.animation.index>=this.animation.scenario.length-1) this.rewind();
@@ -386,7 +386,7 @@
 			dummy: false // Интервал не меняет кадры, крутясь в холостую
 		},
 		mover: null,
-		play: function() {
+		play: function() { 
 			if (this.interval>0) {
 				this.data.dummy = false; return true;
 			};
@@ -510,7 +510,7 @@
 		Brahma(that.master.data.HTMLElements.visualController).css("width",Math.round(progress*100)+'%');
 	});
 },{
-	bindEvents : function() {
+	bindEvents : function() { 
 		var that = this, downed = false, ctrlWidth;
 		// Pause on click
 		Brahma(this.master.selector).bind('click', function() {

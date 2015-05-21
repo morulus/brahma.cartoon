@@ -12,7 +12,7 @@
 			dummy: false // Интервал не меняет кадры, крутясь в холостую
 		},
 		mover: null,
-		play: function() {
+		play: function() { 
 			if (this.interval>0) {
 				this.data.dummy = false; return true;
 			};
