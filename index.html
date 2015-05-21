@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<title>Brahma.cartoon — PNG Animator</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="PNG Animator">
 		<meta name="keywords" content="JavaScript,Widget,Brahma,Cartoon,Animator,PNG">
 		<meta name="author" content="Vladimir Kalmykov">
@@ -48,7 +48,7 @@
 			<div class="col-md-6" id="motionscreen">
 				
 					
-						<figure data-cartoon="cols:4;rows:5;height:70px;scenario:..;" data-cartoon-src="demo/frames/fox.png" ></figure>
+						<figure data-cartoon="cols:4;rows:5;height:70px;" data-cartoon-src="demo/frames/fox.png" ></figure>
 					
 					<h1><i>Brahma</i>Cartoon</h1>
 				
@@ -390,14 +390,12 @@ use.bind('end', function() {
 			Brahma('.in-design').removeClass('in-design');
 		}
 	};
-
+	
 	Brahma("figure").tie(function() {
 		loadings=this.length;
-	}).use('cartoon', {
-		onReady: function() {
-			loaded();
-		}
-	})
+	}).use('cartoon').bind('ready', function() {
+		loaded();
+	});
 })();
 
 

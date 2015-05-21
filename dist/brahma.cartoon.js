@@ -37,6 +37,7 @@
 			this.config = Brahma.copyProps(this.config, props);
 		},
 		run: function() {
+
 			/* SRC спрайта*/
 			if (this.config.src) {
 				/* Мануальное указание пути до спрайта */
@@ -49,6 +50,7 @@
 				this.data.src = style.backgroundImage.slice(4, -1);
 				if (this.data.src==="") return false; // Do nothing
 			}
+			console.log('run');
 
 			/* Предзагрузка */
 			this.preloadSprite(function() {
@@ -263,6 +265,7 @@
 			return this;
 		},
 		preloadSprite: function(callback) {
+
 			var that=this;
 			this.testImage = new Image();
 			this.testImage.onload = function(){
