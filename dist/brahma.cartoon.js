@@ -239,9 +239,7 @@
 				this.module('animator').data.dummy=false;
 				if (this.animation.index>=this.animation.scenario.length-1) this.rewind();
 				this.play();
-			} else {
-				console.log(this.module('animator').interval, this.module('animator').data.dummy, this.module('animator').waiter);
-			}
+			};
 			return this;
 		},
 		/* Ставит анимацию на паузу */
