@@ -393,8 +393,10 @@ use.bind('end', function() {
 	
 	Brahma("figure").tie(function() {
 		loadings=this.length;
-	}).use('cartoon').bind('ready', function() {
-		loaded();
+	}).each(function() {
+		Brahma(this).app('cartoon').bind('ready', function() {
+			loaded();
+		});
 	});
 })();
 
