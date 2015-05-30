@@ -61,8 +61,21 @@
 				/*
 					Устанавливаем размер контейнера
 				*/
-				Brahma(this.selector).css("width", this.animation.width+'px');
-				Brahma(this.selector).css("height", this.animation.height+'px');
+				Brahma(this.selector).css("width", this.animation.width);
+				if ("string"===typeof this.animation.height && this.animation.height.substr(-3)==='rat') {
+					/*
+					Если значение высоты указано в rat, то мы не указываем значение высоты, а используем трюк с пропорциональным блоком
+					*/
+					Brahma(this.selector).css("height", "auto")
+					.put('div')
+					.css({
+						"padding-bottom": (parseFloat(this.animation.height)*100).toFixed(4)+'%',
+						"width": "100%"
+					});
+				} else {
+
+					Brahma(this.selector).css("height", this.animation.height);
+				}
 				/*
 					Устанавливаем размер фонового изобаржения
 				*/
@@ -125,20 +138,37 @@
 		},
 		dataCollection: function() {
 			/* > Высота и ширина контейнера в px */
-			;(this.config.width) ? (this.animation.width=parseInt(this.config.width))
-			: (this.animation.width=Brahma(this.selector)[0].clientHeight);
+			if (this.config.width) {
+				// Рассматриваем width на предмет rat/arat
+				if ("string"===typeof this.config.width && this.config.width.substr(-3)==='rat') {
+					if (this.config.width.substr(-4)==='arat') {
+						// Автоматические значение в процентах относительно исходного размера спрайта фиксированной величины
+						this.animation.width = this.config.width;
+						
+					} else {
+						// Относительно высоты
+						this.animation.width = Brahma.pixelize(parseInt(this.config.width.substr(0, this.config.width.length-3)), parseInt(this.config.height)||Brahma(this.selector)[0].clientHeight)+'px';
+					}
+				} else {
+					this.animation.width=parseInt(this.config.width)+'px';
+				}
+			} else {
+				this.animation.width=Brahma(this.selector)[0].clientWidth+'px'
+			}
 
 			(this.config.height) 
-			? (this.animation.height=parseInt(this.config.height))
-			: (this.animation.height=Brahma(this.selector)[0].clientHeight);
+			? (this.animation.height=parseInt(this.config.height))+'px'
+			: (this.animation.height=Brahma(this.selector)[0].clientHeight+'px');
 			
+
+
 			/*
 			Устанавливаем значения cols и rows
 			*/
 			if (!this.config.cols) {
 				/* Если указан frameWidth, мы может узнать значение исходя из процентного соотношения */
 				if (this.config.frameWidth) {
-					
+					this.config.cols = 1/this.config.frameWidth;
 				} else {
 					this.data.cols = 1;
 				};
@@ -149,7 +179,7 @@
 			if (!this.config.rows) {
 				/* Если указан frameWidth, мы может узнать значение исходя из процентного соотношения */
 				if (this.config.frameHeight) {
-					
+					this.data.rows = 1/this.config.frameHeight;
 				} else {
 					this.data.rows = 1;
 				};
@@ -157,21 +187,7 @@
 				this.data.rows = this.config.rows;
 			};
 
-			/* > Доп. проверяем не является ли ширина или высота нулю */
-			if (this.animation.width===0) {
-				if (this.animation.height!==0) {
-					this.animation.width = this.testImage.width*((this.animation.height*this.data.rows)/this.testImage.height)/this.data.cols;
-				} else {
-					/* Если ширина не указана явно, мы можем взять это значение из исходного размера изображения / cols */
-					this.animation.width = this.testImage.width/this.config.cols;
-				};
-			};
-			if (this.animation.height===0) {
-				/* Если ширина не указана явно, мы можем взять это значение исходя из соотноешния сторон */
-				/* Вначале рассчитываем полную относительную высоту */
-				
-				this.animation.height = this.testImage.height*((this.animation.width*this.data.cols)/this.testImage.width)/this.data.rows;
-			};
+
 
 			/* > Ряды и колонки в px, размер слайдов в % */
 			if (this.config.cols) {
@@ -179,7 +195,6 @@
 
 				this.data.cols = this.config.cols;
 			} else {
-
 				var px = this.config.frameWidth ?  Brahma.percentEq(this.config.frameWidth,this.animation.width) : this.animation.width;
 
 				this.data.cols = Math.floor(this.testImage.width/px);
@@ -188,13 +203,43 @@
 			};
 
 			if (this.config.rows) {
-				this.data.frameHeight = 100/this.config.rows;
+				/* Если указано количество строк, то мы можем рассчитать высоту кадра */
+				this.data.frameHeight = 1/this.config.rows;
+				
 				this.data.rows = this.config.rows;
 			} else {
-				var px = this.config.frameHeight ?  Brahma.percentEq(this.config.frameHeight,this.animation.width) : this.animation.height;
+				/* Если указана высота кадра, мы можешь вычитать количество строк */
+				var px = this.config.frameHeight ?  Brahma.percentEq(this.config.frameHeight,this.testImage.height) : this.testImage.height;
 				this.data.rows = Math.floor(this.testImage.height/px);
 				this.data.frameHeight = (px) / this.testImage.height;
+
 			};
+
+			/* > Доп. проверяем не является ли ширина или высота нулю */
+			if (parseInt(this.animation.width)===0) {
+				if (parseInt(this.animation.height)!==0) {
+					this.animation.width = (this.testImage.width*((parseInt(this.animation.height)*this.data.rows)/this.testImage.height)/this.data.cols)+'px';
+				} else {
+					/* Если ширина не указана явно, мы можем взять это значение из исходного размера изображения / cols */
+					this.animation.width = (this.testImage.width/this.config.cols)+'px';
+				};
+			} else if (this.animation.width.substr(-4)==="arat") {
+
+				this.animation.width = (((this.testImage.width*this.data.frameWidth)/parseInt(this.animation.width))*100).toFixed(0)+'%';
+			}
+
+			if (parseInt(this.animation.height)===0) {
+				/* Если ширина не указана явно, мы можем взять это значение исходя из соотноешния сторон */
+				
+				/* Если ширина указана в процентах, то высоту мы должны устанавливать в rat */
+				if ("string"===typeof this.animation.width && this.animation.width.substr(-1)==='%') {
+					this.animation.height = ((this.data.frameHeight*this.testImage.height)/(this.data.frameWidth*this.testImage.width)).toFixed(6)+'rat';
+
+				} else {
+					this.animation.height = (this.testImage.height*((parseInt(this.animation.width)*this.data.cols)/this.testImage.width)/this.data.rows)+'px';
+				}
+			};
+
 		},
 		/* Отматывает на первый кадр */
 		rewind: function() {
@@ -208,7 +253,11 @@
 		/* Перемещает на фрейм и запускает анимацию, если не запущено */
 		goto: function(index) {
 			this.animation.index = index-1;
-			this.wake();
+			if (this.isAnimated()) {
+				this.wake();
+			} else {
+				this.module("animator").goToFrame(this.animation.index);
+			}
 			return this;
 		},
 		fps: function(fps) {

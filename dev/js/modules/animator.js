@@ -78,7 +78,7 @@
 		},
 		goToFrame: function(frameIndex) {
 			this.master.animation.index = frameIndex;
-			this.changePosition(animator.mover.call(this, this.getFrame(this.master.animation.index)[0]));
+			this.changePosition(this.mover.call(this, this.getFrame(this.master.animation.index)[0]));
 		},
 		getProgress: function() {
 			return this.master.animation.index/this.master.animation.scenario.length;
